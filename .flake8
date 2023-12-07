@@ -1,0 +1,23 @@
+[flake8]
+max-line-length = 79
+exclude =
+    .tox,
+    .git,
+    settings.py,
+    */migrations/*,
+    */static/CACHE/*,
+    */staticfiles/*,
+    */media/*,
+    docs,
+    .venv
+ignore =
+    E266,
+    W503
+
+[autoflake]
+imports =
+    django,
+    requests,
+    urllib3
+in-place = true
+remove-all-unused-imports = true

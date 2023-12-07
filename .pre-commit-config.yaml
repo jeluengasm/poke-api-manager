@@ -1,0 +1,48 @@
+exclude: "^docs/|/migrations/|locale/"
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--settings-file=pyproject.toml"]
+
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+        args: ["--config=pyproject.toml"]
+
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.2.1
+    hooks:
+    -   id: autoflake
+        args: ["--config=.flake8"]
+
+  - repo: https://github.com/landscapeio/prospector
+    rev: v1.10.3
+    hooks:
+    - id: prospector
+      additional_dependencies:
+        - "prospector[with_everything]"
+        - types-setuptools
+        - types-PyYAML
+      args:
+        - --profile=.prospector.yaml
+        - --pylint-config-file=.pylintrc
+        - --summary-only
+        - --zero-exit
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, test]

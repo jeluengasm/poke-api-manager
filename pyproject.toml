@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "poke-api-manager"
+version = "0.1.0"
+description = "Simple API using Django REST Framework, based on public API PokéAPI."
+authors = ["Jhon Luengas <esteban0921@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "~4.2"
+djangorestframework = "~3.14.0"
+drf-spectacular = "^0.26.5"
+django-extensions = "^3.2.3"
+python-dotenv = "^1.0.0"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.django.dependencies]
+django-extensions = "^3.2.3"
+psycopg2-binary = "^2.9.9"
+django-filter = "^23.5"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.11.0"
+isort = "^5.12.0"
+autoflake = "^2.2.1"
+coverage = "^7.3.2"
+flake8-isort = "^6.1.1"
+ipython = "^8.18.1"
+pytest = "^7.4.3"
+pre-commit = "^3.5.0"
+
+[tool.poetry.group.django-dev.dependencies]
+pytest-django = "^4.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+line_length = 79
+known_first_party = ["apps", "config"]
+multi_line_output = 3
+default_section = "THIRDPARTY"
+skip = ["venv/"]
+skip_glob = "**/migrations/*.py"
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+
+[tool.black]
+line-length = 79
+skip-string-normalization = true
+skip-magic-trailing-comma = true
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | (migrations)
+)/
+'''
+preview = true
+verbose = true
