@@ -44,7 +44,7 @@ repos:
     hooks:
       - id: pytest
         name: pytest
-        entry: docker compose run --rm -T backend-pokeapi sh -c "pytest ."
+        entry: pytest .
         language: system
         pass_filenames: false
         always_run: true

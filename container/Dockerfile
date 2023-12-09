@@ -17,6 +17,7 @@ ENV POETRY_CACHE_DIR=/opt/.cache
 
 # Install apt packages and Install poetry separated from system interpreter
 RUN apt-get update && \
+  apt-get install ssh -y && \
   pip install -U pip setuptools && \
   pip install poetry==${POETRY_VERSION}
 
