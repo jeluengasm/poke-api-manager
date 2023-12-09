@@ -40,6 +40,15 @@ repos:
         - --summary-only
         - --zero-exit
 
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: docker compose run --rm -T backend-pokeapi sh -c "pytest ."
+        language: system
+        pass_filenames: false
+        always_run: true
+
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.0.0
     hooks:

@@ -1,0 +1,32 @@
+version: '3.3'
+
+volumes:
+    pokeapi_data: {}
+
+services:
+  postgres-pokeapi:
+    image: postgres:15-alpine
+    volumes:
+      - pokeapi_data:/var/lib/postgresql/data
+    container_name: postgres-pokeapi
+    env_file: .env
+    ports:
+      - 5434:5432
+
+  backend-pokeapi:
+    build:
+      context: .
+      dockerfile: container/Dockerfile
+      args:
+        - DEV=true
+    depends_on:
+      - postgres-pokeapi
+    volumes:
+      - .:/app
+    ports:
+    - 8001:8000
+    entrypoint: /entrypoint.sh
+    command: /start.sh
+    container_name: backend-pokeapi
+    restart: on-failure
+    env_file: .env
