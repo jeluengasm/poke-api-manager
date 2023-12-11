@@ -46,7 +46,7 @@ BUILT_IN_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["rest_framework", "django_filters", "drf_spectacular"]
+THIRD_PARTY_APPS = ["rest_framework", "django_extensions", "drf_spectacular"]
 
 LOCAL_APPS = ["wrapper"]
 
@@ -182,6 +182,7 @@ SPECTACULAR_SETTINGS = {
     ),
     "VERSION": "0.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
+    'SCHEMA_PATH_PREFIX': r"/api/v[0-9]",
     "COMPONENT_SPLIT_REQUEST": True,
     "CONTACT": {"name": "Jhon Luengas", "email": "esteban0921@gmail.com"},
     "LICENSE": {
@@ -191,7 +192,7 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,
         "persistAuthorization": True,
-        # "displayRequestDuration": True,
+        "displayRequestDuration": True,
     },
     # "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
     "SERVE_AUTHENTICATION": [
