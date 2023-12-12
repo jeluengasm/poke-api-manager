@@ -26,8 +26,10 @@ from config.api import api
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    re_path(r"api/docs/?$", SpectacularSwaggerView.as_view(), name="swagger"),
-    re_path(r"api/schema/?$", SpectacularAPIView.as_view(), name="schema"),
+    re_path(
+        r"api/v1/docs/?$", SpectacularSwaggerView.as_view(), name="swagger"
+    ),
+    re_path(r"api/v1/schema/?$", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api-auth/", include("rest_framework.urls", namespace="rest_framework")
     ),
