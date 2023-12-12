@@ -161,7 +161,8 @@ class PokemonApiWrapper(ListPaginator):
 
         Returns:
             Response: The response object containing the Pokemon data if found,
-                      or a 404 Not Found response if the Pokemon does not exist.
+                      or a 404 Not Found response if the Pokemon does not
+                      exist.
         """
 
         response = self._pokemon_api.get_pokemon_by_id(pk)
