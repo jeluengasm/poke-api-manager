@@ -59,7 +59,7 @@ class PokemonViewSet(
         return wrapper.retrieve(kwargs["pokeapi_id"])
 
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
+        partial = kwargs.pop("partial", False)
         instance = self.get_object()
         try:
             instance = self.queryset.get(pokeapi_id=kwargs["pokeapi_id"])
@@ -71,8 +71,8 @@ class PokemonViewSet(
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
+        if getattr(instance, "_prefetched_objects_cache", None):
+            # If "prefetch_related" has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
 
