@@ -3,6 +3,21 @@ name: Checks
 
 on: [push]
 
+# env:
+#   DEBUG: ${{ secrets.DEBUG }}
+#   SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#   DJANGO_SETTINGS_MODULE: config.settings
+#   PYTHONPATH: /app/apps/
+#   DOMAIN: ${{ secrets.DOMAIN }}
+#   ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+#   CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
+#   POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+#   POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+#   POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#   POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+
+
 jobs:
   test-lint:
     name: Test and Lint
@@ -15,6 +30,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
+      - name: 'Create env file'
+        run: |
+          touch .env
+          run: |
+          echo "${{ secrets.ENV_FILE }}" >> .env
       - name: Test
         run: docker compose run --rm backend-pokeapi sh -c "pytest ."
       - name: Lint

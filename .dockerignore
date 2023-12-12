@@ -5,6 +5,5 @@
 .gitignore
 .github/*
 README.md
-container/*
 LICENSE
 .pre-commit-config.yaml

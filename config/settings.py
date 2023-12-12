@@ -48,7 +48,7 @@ BUILT_IN_APPS = [
 
 THIRD_PARTY_APPS = ["rest_framework", "django_extensions", "drf_spectacular"]
 
-LOCAL_APPS = ["wrapper"]
+LOCAL_APPS = ["apps.wrapper"]
 
 INSTALLED_APPS = BUILT_IN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
