@@ -1,6 +1,12 @@
 # poke-api-manager
 Simple API using Django REST Framework, based on public API PokéAPI.
 
+### Recommended versions
+
+- Python 3.10
+- Docker enine >= 24.0.7
+- Docker compose >= 2.21.0
+
 ### Create .env file from .env.dev
 
 Create `.env` file from `.env.dev` and edit it.
