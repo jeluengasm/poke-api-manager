@@ -57,8 +57,8 @@ class PokemonSpriteSerializer(serializers.Serializer):
     Serializer for detailed information about Pokemon sprites.
 
     This serializer handles the serialization of various Pokemon sprite images,
-    including default, shiny, and female variations, as well as additional sprite
-    information contained within 'other' and 'versions' fields.
+    including default, shiny, and female variations, as well as additional
+    sprite information contained within 'other' and 'versions' fields.
     """
 
     back_default = serializers.CharField(max_length=255, allow_null=True)

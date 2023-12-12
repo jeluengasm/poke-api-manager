@@ -10,7 +10,7 @@ class PokemonApi:
     _pokemon_list: list = []
 
     @property
-    def BASE_URI(self):
+    def BASE_URI(self):  # pylint: disable=invalid-name
         """
         Gets the base URI of the object.
 
@@ -33,7 +33,7 @@ class PokemonApi:
         """
 
         endpoint = f"{self.BASE_URI}pokemon?limit={limit}&offset={offset}"
-        response = requests.get(endpoint)
+        response = requests.get(endpoint, timeout=10)
         if response.status_code == 200:
             return response.json()
         return []
@@ -46,11 +46,12 @@ class PokemonApi:
             pokeapi_id (int): The ID of the Pokemon to retrieve.
 
         Returns:
-            dict: A dictionary containing information about the Pokemon. If the Pokemon does not exist, an empty dictionary is returned.
+            dict: A dictionary containing information about the Pokemon. If the
+                  Pokemon does not exist, an empty dictionary is returned.
         """
 
         endpoint = f"{self.BASE_URI}pokemon/{pokeapi_id}"
-        response = requests.get(endpoint)
+        response = requests.get(endpoint, timeout=10)
         if response.status_code == 200:
             return response.json()
         return {}

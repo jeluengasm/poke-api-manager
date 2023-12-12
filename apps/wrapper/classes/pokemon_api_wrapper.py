@@ -33,7 +33,7 @@ class PokemonApiWrapper(ListPaginator):
         super().__init__(request)
 
     @property
-    def pokemon_list(self) -> list:
+    def pokemon_list(self) -> list:  # pylint: disable=used-before-assignment
         """
         Returns the list of pokemons.
 

@@ -133,6 +133,8 @@ disable=R,
         xrange-builtin,
         zip-builtin-not-iterating,
         missing-module-docstring,
+        protected-access,
+        consider-using-f-string,
 
 
 [REPORTS]

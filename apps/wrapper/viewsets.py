@@ -101,12 +101,13 @@ class PokemonViewSet(
             Response: The HTTP response containing the serialized Pokemon data.
 
         Note:
-            This function first attempts to retrieve the Pokemon instance from the queryset
-            based on the provided pokeapi_id. If the instance is found, it is serialized and
-            returned as an HTTP response. If the instance does not exist, the function creates
-            an instance of `PokemonApiWrapper` using the given request and
-            invokes its `retrieve` method with the pokeapi_id to get the Pokemon
-            data from the external API.
+            This function first attempts to retrieve the Pokemon instance from
+            the querysetbased on the provided pokeapi_id. If the instance is
+            found, it is serialized andreturned as an HTTP response. If the
+            instance does not exist, the function createsan instance of
+            `PokemonApiWrapper` using the given request and invokes its
+            `retrieve` method with the pokeapi_id to get the Pokemon data
+            from the external API.
         """
         try:
             instance = self.queryset.get(pokeapi_id=kwargs["pokeapi_id"])
