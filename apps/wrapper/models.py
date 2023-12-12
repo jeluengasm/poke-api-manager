@@ -2,13 +2,8 @@ from django.db import models
 
 
 class PokemonAbility(models.Model):
-    """Pokemon ability. Stores the name, url, slot and if it is hidden
-
-    Args:
-        internal_id (int):
-
-    Returns:
-        _type_: _description_
+    """
+    Model representing a Pokemon's ability.
     """
 
     ability = models.JSONField(default=list)
@@ -24,6 +19,10 @@ class PokemonAbility(models.Model):
 
 
 class PokemonSprite(models.Model):
+    """
+    Model representing a Pokemon's sprite.
+    """
+
     back_default = models.URLField()
     back_female = models.URLField()
     back_shiny = models.URLField()
@@ -41,6 +40,10 @@ class PokemonSprite(models.Model):
 
 
 class PokemonType(models.Model):
+    """
+    Model representing a Pokemon's type.
+    """
+
     slot = models.PositiveIntegerField(null=True)
     type = models.JSONField(default=dict)
 
@@ -53,6 +56,10 @@ class PokemonType(models.Model):
 
 
 class Pokemon(models.Model):
+    """
+    Model representing a Pokemon.
+    """
+
     pokeapi_id = models.PositiveIntegerField(
         db_index=True, verbose_name="Pokedex ID"
     )
