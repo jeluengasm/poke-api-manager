@@ -23,7 +23,7 @@ RUN apt-get update && \
 WORKDIR ${APP_HOME}
 
 # Install Poetry dependencies
-COPY poetry.lock pyproject.toml ./
+COPY pyproject.toml ./
 RUN poetry config virtualenvs.create false &&\
     if [ "${BUILD_ENV}" = "local" ]; then \
       poetry install --no-interaction --no-ansi; \
