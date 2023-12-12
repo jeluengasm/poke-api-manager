@@ -34,7 +34,8 @@
 				"EditorConfig.EditorConfig",
 				"ms-azuretools.vscode-docker",
 				"oderwat.indent-rainbow",
-				"codezombiech.gitignore"
+				"codezombiech.gitignore",
+				"github.vscode-github-actions"
 			]
 		}
 	}

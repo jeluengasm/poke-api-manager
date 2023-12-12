@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import serializers
 
 from apps.wrapper import models
@@ -99,6 +100,7 @@ class PokemonSpriteUpdateSerializer(
     """
 
     class Meta:
+        model = models.PokemonSprite
         fields = (
             "back_default",
             "back_female",
@@ -163,15 +165,79 @@ class PokemonSerializer(serializers.Serializer):
         fields = ("id", "name", "abilities", "sprites", "types")
 
 
-class PokemonUpdateSerializer(serializers.ModelSerializer, PokemonSerializer):
-    """
-    Serializer for updating a Pokemon.
-
-    This serializer extends the `PokemonSerializer` to allow updates
-    to the Pokemon model. It inherits fields and validation from
-    the base class and links them to the model for database updates.
-    """
+class PokemonUpdateSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source="pokeapi_id")
+    name = serializers.CharField(max_length=255)
+    abilities = PokemonAbilityUpdateSerializer(many=True)
+    sprites = PokemonSpriteUpdateSerializer()
+    types = PokemonTypeUpdateSerializer(many=True)
 
     class Meta:
         model = models.Pokemon
-        fields = ("name", "abilities", "sprites", "types")
+        fields = ("id", "name", "abilities", "sprites", "types")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        """
+        Creates a new Pokemon instance in the database.
+
+        Args:
+            validated_data (dict): A dictionary containing the validated data
+            for creating a new Pokemon.
+                - abilities (list): A list of dictionaries containing the data
+                                    for the abilities of the Pokemon.
+                - sprites (dict): A dictionary containing the data for the
+                                  sprites of the Pokemon.
+                - types (list): A list of dictionaries containing the data for
+                                the types of the Pokemon.
+
+        Returns:
+            Pokemon: The newly created Pokemon instance.
+        """
+        abilities = validated_data.pop("abilities")
+        sprites = validated_data.pop("sprites")
+        types = validated_data.pop("types")
+        pokemon = models.Pokemon.objects.create(**validated_data)
+        for ability in abilities:
+            ability_model = models.PokemonAbility.objects.create(**ability)
+            pokemon.abilities.add(ability_model)
+        for type in types:
+            type_model = models.PokemonType.objects.create(**type)
+            pokemon.types.add(type_model)
+        sprite_model = models.PokemonSprite.objects.create(**sprites)
+        pokemon.sprites = sprite_model
+        pokemon.save()
+        return pokemon
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        """
+        Updates an instance of a Pokemon with the given validated data.
+
+        Args:
+            instance (Pokemon): The Pokemon instance to be updated.
+            validated_data (dict): The validated data containing the updated
+            values.
+
+        Returns:
+            Pokemon: The updated Pokemon instance.
+
+        Raises:
+            None
+        """
+        abilities = validated_data.pop("abilities")
+        sprites = validated_data.pop("sprites")
+        types = validated_data.pop("types")
+        instance.abilities.all().delete()
+        instance.types.all().delete()
+        instance.sprites.delete()
+        for ability in abilities:
+            ability_model = models.PokemonAbility.objects.create(**ability)
+            instance.abilities.add(ability_model)
+        for type in types:
+            type_model = models.PokemonType.objects.create(**type)
+            instance.types.add(type_model)
+        sprite_model = models.PokemonSprite.objects.create(**sprites)
+        instance.sprites = sprite_model
+        instance.save()
+        return super().update(instance, validated_data)
