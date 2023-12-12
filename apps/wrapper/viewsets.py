@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
 from rest_framework import mixins, viewsets
 from rest_framework.response import Response
@@ -61,8 +64,8 @@ class PokemonViewSet(
             ),
         ]
     )
-    # @method_decorator(cache_page(60 * 60 * 24))  # 1 day
-    # @method_decorator(vary_on_cookie)
+    @method_decorator(cache_page(60 * 60 * 24))  # 1 day
+    @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
         """
         Retrieves a list of Pokemon based on the given query parameters.

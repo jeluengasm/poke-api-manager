@@ -121,3 +121,41 @@ class TestPokemonApiV1List:
         results = data.get("results", None)
         assert pokedex_id in results[0].get("url", None)
         assert "bulbasaur" in results[0].get("name", None)
+
+
+@pytest.mark.django_db(transaction=True)
+class TestPokemonApiV1Retrieve:
+    def test_pokemon_retrieve(self, api_client):
+        pk = 1
+        response = api_client.get(f"/api/v1/pokemon/{pk}/")
+        assert response.status_code == 200
+        assert response.data
+
+        data = response.data
+
+        assert isinstance(data, dict)
+        assert isinstance(data.get("id", None), int)
+        assert isinstance(data.get("name", None), str)
+        assert isinstance(data.get("abilities", None), list)
+        assert isinstance(data.get("sprites", None), dict)
+        assert isinstance(data.get("types", None), list)
+        assert data.get("name", None) == "bulbasaur"
+
+    def test_modified_pokemon_retrieve(
+        self, api_client, db_pokemon, pokemon_params
+    ):
+        print(db_pokemon)
+        pk = 1
+        response = api_client.get(f"/api/v1/pokemon/{pk}/")
+        assert response.status_code == 200
+        assert response.data
+
+        data = response.data
+
+        assert isinstance(data, dict)
+        assert data.get("id", None) == 1
+        assert data.get("name", None) == pokemon_params["name"]
+        assert (
+            data["abilities"][0]["ability"]["name"]
+            == pokemon_params["abilities"][0]["ability"]["name"]
+        )
