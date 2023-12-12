@@ -176,7 +176,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Uniandes PokeAPI",
+    "TITLE": "Uniandes PokéAPI",
     "DESCRIPTION": (
         "Simple API using Django REST Framework, based on public API PokéAPI."
     ),

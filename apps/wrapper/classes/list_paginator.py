@@ -33,7 +33,8 @@ class ListPaginator:
             EmptyPage: If the requested page is empty.
         """
         page_number = offset // limit + 1
-        paginator = Paginator(data, limit)
+        orphans = offset % limit
+        paginator = Paginator(data, limit, orphans=orphans)
         try:
             page = paginator.page(page_number)
         except EmptyPage:

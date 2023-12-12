@@ -120,6 +120,10 @@ class PokemonViewSet(
         wrapper = PokemonApiWrapper(request)
         return wrapper.retrieve(kwargs["pokeapi_id"])
 
+    @extend_schema(exclude=True)
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
     def update(self, request, *args, **kwargs):
         """
         Updates an existing object with the given request data.
