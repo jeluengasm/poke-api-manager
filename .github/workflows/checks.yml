@@ -15,7 +15,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Lint
-        run: docker compose run --rm backend-pokeapi sh -c "flake8"
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_FILE }}" >> .env
       - name: Test
         run: docker compose run --rm backend-pokeapi sh -c "pytest ."
+      - name: Lint
+        run: docker compose run --rm backend-pokeapi sh -c "flake8"

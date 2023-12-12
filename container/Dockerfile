@@ -17,14 +17,13 @@ ENV POETRY_CACHE_DIR=/opt/.cache
 
 # Install apt packages and Install poetry separated from system interpreter
 RUN apt-get update && \
-  apt-get install ssh -y && \
   pip install -U pip setuptools && \
   pip install poetry==${POETRY_VERSION}
 
 WORKDIR ${APP_HOME}
 
-# Install dependencies
-COPY poetry.lock pyproject.toml ./
+# Install Poetry dependencies
+COPY pyproject.toml ./
 RUN poetry config virtualenvs.create false &&\
     if [ "${BUILD_ENV}" = "local" ]; then \
       poetry install --no-interaction --no-ansi; \
@@ -33,7 +32,7 @@ RUN poetry config virtualenvs.create false &&\
     fi
 
 # Install required system dependencies
-RUN apt-get update && apt-get install --no-install-recommends -y \
+RUN apt-get update && apt-get install --no-install-recommends -y ssh\
     && useradd django --user-group --create-home --shell /bin/bash \
     && chown django:django -R ${APP_HOME} \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \

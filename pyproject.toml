@@ -22,6 +22,8 @@ coverage = "~7.3.2"
 flake8-isort = "~6.1.1"
 ipython = "~8.18.1"
 pre-commit = "~3.5.0"
+pylint = "~3.0.3"
+pylint-django = "~2.5.5"
 
 [tool.poetry.group.test.dependencies]
 pytest = "~7.4.3"

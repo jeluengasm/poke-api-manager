@@ -26,20 +26,6 @@ repos:
     -   id: autoflake
         args: ["--config=.flake8"]
 
-  - repo: https://github.com/landscapeio/prospector
-    rev: v1.10.3
-    hooks:
-    - id: prospector
-      additional_dependencies:
-        - "prospector[with_everything]"
-        - types-setuptools
-        - types-PyYAML
-      args:
-        - --profile=.prospector.yaml
-        - --pylint-config-file=.pylintrc
-        - --summary-only
-        - --zero-exit
-
   - repo: local
     hooks:
       - id: pytest
