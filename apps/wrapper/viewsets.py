@@ -19,8 +19,8 @@ class PokemonViewSet(
     """
     A viewset that provides default `list` and `retrieve` operations for
     Pokemon,as well as `create` and `update` operations. This viewset uses the
-    `PokemonApiWrapper` for data retrieval and caching, and different serializers
-    for the different actions.
+    `PokemonApiWrapper` for data retrieval and caching, and different
+    serializers for the different actions.
 
     Inherits from:
     - `ReadOnlyModelViewSet` for list and retrieve actions
@@ -29,8 +29,10 @@ class PokemonViewSet(
 
     Attributes:
         queryset: The default queryset that includes all Pokemon objects.
-        serializer_class: The default serializer class used for list operations.
-        lookup_field: The field used to perform object lookup, which is `pokeapi_id`.
+        serializer_class: The default serializer class used for list
+                          operations.
+        lookup_field: The field used to perform object lookup, which is
+        `pokeapi_id`.
 
     The `get_serializer_class` method is overridden to use `PokemonSerializer`
     for retrieve, update, and partial_update actions, allowing for different
