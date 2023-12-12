@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from apps.wrapper import models
 from apps.wrapper.classes.list_paginator import ListPaginator
 from apps.wrapper.classes.pokemon_api import PokemonApi
 from apps.wrapper.serializers import PokemonSerializer
@@ -110,6 +111,16 @@ class PokemonApiWrapper(ListPaginator):
                 if kwargs["pokedex_id"] == re.findall(regex, pokemon["url"])[0]
             ]
 
+    @property
+    def db_pokemons(self):
+        """
+        Retrieves the list of pokemons from the database.
+
+        Returns:
+            list: The list of pokemons.
+        """
+        return list(models.Pokemon.objects.all().values("pokeapi_id", "name"))
+
     def replace_urls(self):
         """
         Replaces the base URI in the list of pokemons with the base URI of the
@@ -121,6 +132,24 @@ class PokemonApiWrapper(ListPaginator):
                 f"{self.base_uri}",
                 pokemon["url"],
             )
+
+    def add_or_update_pokemons(self, db_pokemons):
+        """
+        Adds or updates the list of pokemons in the instance.
+        """
+        for index, pokemon in enumerate(self._pokemon_list):
+            index = None
+            for index2, db_pokemon in enumerate(db_pokemons):
+                if db_pokemon["url"] == pokemon["url"]:
+                    self._pokemon_list[index] = db_pokemon
+                    index = index2
+            if index is not None:
+                try:
+                    db_pokemons.pop(index)
+                except IndexError:
+                    pass
+
+        self._pokemon_list += db_pokemons
 
     def list(self, query_params, limit, offset):
         """
@@ -144,11 +173,18 @@ class PokemonApiWrapper(ListPaginator):
         self.pokemon_list = self.pokemon_api_list(limit=self.count).get(
             "results", []
         )
+        new_db_pokemons = []
+        for pokemon in self.db_pokemons:
+            pokemon["url"] = (
+                f"{self.base_uri}pokemon/{pokemon.pop('pokeapi_id')}/"
+            )
+            new_db_pokemons.append(pokemon)
         if "name" in query_params or "pokedex_id" in query_params:
             self.filter_pokemons(**query_params)
         self.replace_urls()
+        self.add_or_update_pokemons(new_db_pokemons)
         return Response(
-            data=self.paginate_list(self.pokemon_list, limit, offset),
+            data=self.paginate_list(self._pokemon_list, limit, offset),
             status=status.HTTP_200_OK,
         )
 
