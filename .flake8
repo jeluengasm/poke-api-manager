@@ -4,6 +4,7 @@ exclude =
     .tox,
     .git,
     settings.py,
+    conftest.py,
     */migrations/*,
     */static/CACHE/*,
     */staticfiles/*,
