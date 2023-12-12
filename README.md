@@ -4,7 +4,7 @@ Simple API using Django REST Framework, based on public API PokéAPI.
 ### Recommended versions
 
 - Python 3.10
-- Docker enine >= 24.0.7
+- Docker engine >= 24.0.7
 - Docker compose >= 2.21.0
 
 ### Create .env file from .env.dev
@@ -106,3 +106,7 @@ NOTES:
 - Pre-commit hooks are not installed by default.
 - If you don't use Dev container, you must use a Python environment with pre-commit installed.
 - Pre-commit hooks are installed inside the Dev container.
+
+### GitHub Actions
+
+GitHub Actions are used to test and lint the code using Pytest and Flake8.
