@@ -82,10 +82,10 @@ class TestPokemonApiV1List:
 
         data = response.data
 
-        assert data.get("count", 0) == 9
+        assert data.get("count", 0) == 10
         assert data.get("next", None) is None
         assert data.get("previous", None) is None
-        assert len(data.get("results", None)) == 9
+        assert len(data.get("results", None)) == 10
         for pokemon in data.get("results", None):
             assert name in pokemon.get("name", None)
 
